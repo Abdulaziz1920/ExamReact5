@@ -1,6 +1,6 @@
 import axios from "axios";
-import { TOKEN } from "../constants/const";
 import Cookies from "js-cookie";
+import { TOKEN } from "../constants/const";
 const token = Cookies.get(TOKEN);
 const apiKey = import.meta.env.VITE_API_KEY;
 

@@ -5,7 +5,6 @@ import Main from "./pages/User/Main";
 import AboutUs from "./pages/User/AboutUs.Jsx";
 import Posts from "./pages/User/Posts";
 import Post from "./pages/User/Post";
-import MyPosts from "./pages/User/MyPosts";
 import Login from "./pages/User/Login";
 import Account from "./pages/User/UserAccount";
 import NotFound from "./pages/User/NotFound";
@@ -18,6 +17,8 @@ import { useContext } from "react";
 
 import { AuthContext } from "./context/AuthContext";
 import AdminAccount from "./pages/Admin/AdminAccount";
+import AllCategory from "./pages/User/AllCategory";
+import CreatePost from "./pages/User/CreatePost";
 
 function App() {
   let { isAuthenticated, role } = useContext(AuthContext);
@@ -29,11 +30,12 @@ function App() {
           <Route path="about" element={<AboutUs />} />
           <Route path="posts" element={<Posts />} />
           <Route path="posts/:id" element={<Post />} />
+          <Route path="/:id" element={<AllCategory />} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
           {isAuthenticated && role === "user" && (
             <>
-              <Route path="my-posts" element={<MyPosts />} />
+              <Route path="my-posts" element={<CreatePost />} />
               <Route path="account" element={<Account />} />
             </>
           )}

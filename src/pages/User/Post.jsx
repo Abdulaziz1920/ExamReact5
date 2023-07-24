@@ -1,16 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../css/post.css";
+import { useParams } from "react-router-dom";
+import request from "../../server/request";
+import { IMG_URL } from "../../constants/const";
 
 function Post() {
+  const { id } = useParams();
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const { data } = await request.get(`/post/${id}`);
+        setPost(data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getData();
+  }, [id]);
+  console.log(post.photo);
   const [collapse, setCollapse] = useState(true);
   return (
     <section id="separate">
       <div className="container">
         <div className="post_image">
-          <img
-            src="https://www.alleycat.org/wp-content/uploads/2019/03/FELV-cat.jpg"
-            alt=""
-          />
+          <img src={IMG_URL + post?.photo?._id + "." + post?.photo?.name.split(".")[1]} alt="" />
         </div>
         <div className="separate_post">
           <div className="user">
@@ -21,15 +36,15 @@ function Post() {
               />
             </div>
             <div className="user_info">
-              <h5>Andrew Jonson </h5>
-              <p>Posted on 27th January 2022</p>
+              <h5>{post?.user?.first_name}</h5>
+              <p>{post.createdAt}</p>
             </div>
           </div>
           <div className="post_title">
-            <h1>Step-by-step guide to choosing great font pairs</h1>
+            <h1>{post.title}</h1>
           </div>
           <div className="post_hashtag">
-            <span> Startup (#business, #screen, #life)</span>
+            <span> {post?.category?.name}</span>
           </div>
           <div className="show-more-container">
             <div
@@ -37,21 +52,7 @@ function Post() {
                 collapse ? "gradient maxHeight" : ""
               }`}
             >
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Non
-                blandit massa enim nec. Scelerisque viverra mauris in aliquam
-                sem. At risus viverra adipiscing at in tellus. Sociis natoque
-                penatibus et magnis dis parturient montes. Ridiculus mus mauris
-                vitae ultricies leo. Neque egestas congue quisque egestas diam.
-                Risus in hendrerit gravida rutrum quisque non. Lorem ipsum dolor
-                sit amet consectetur, adipisicing elit. Non illo corrupti ad
-                mollitia voluptatem error veniam voluptatibus quo, sint, officia
-                necessitatibus dolore. Quam at nostrum ab sunt eligendi eaque
-                repudiandae magni assumenda hic est, qui sapiente vitae
-                similique a expedita esse quae iure corporis iste necessitatibus
-                dolor adipisci obcaecati laudantium.
-              </p>
+              <p>{post.description}</p>
             </div>
           </div>
           <div className="button">

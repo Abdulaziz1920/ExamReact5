@@ -1,17 +1,21 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import "../../css/profile.css";
 import { Form, Input, Upload, message } from "antd";
 import { PlusOutlined, LoadingOutlined } from "@ant-design/icons";
 import request from "../../server/request";
 import Button from "../Button/Button";
-import { IMG_URL } from "../../constants/const";
+import { EXPIRE_DATE, IMG_URL, ROLE, TOKEN } from "../../constants/const";
+import { AuthContext } from "../../context/AuthContext";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 function Account() {
   const [form] = Form.useForm();
   const [useFormPassword] = Form.useForm();
   const [imgloading, setImgLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
-
+  const { setisAuthenticated } = useContext(AuthContext);
+  const navigate = useNavigate();
   const uploadButton = (
     <div>
       {imgloading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -24,6 +28,7 @@ function Account() {
       </div>
     </div>
   );
+  
   async function handleChange(e) {
     try {
       setImgLoading(true);
@@ -40,6 +45,14 @@ function Account() {
       setImageUrl(data.photo);
     });
   }, [form]);
+
+  function logout() {
+    setisAuthenticated(false);
+    Cookies.remove(TOKEN);
+    Cookies.remove(ROLE);
+    Cookies.remove(EXPIRE_DATE);
+    navigate("/login");
+  }
 
   async function submit(values) {
     try {
@@ -128,7 +141,10 @@ function Account() {
                 >
                   <Input />
                 </Form.Item>
-                <Button title="Save" />
+                <div className="profileBtn">
+                  <Button title="Save" />
+                  <button onClick={logout}>Logout</button>
+                </div>
               </Form>
             </div>
             <div className="password">

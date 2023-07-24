@@ -1,76 +1,28 @@
+/* =============================================================== */
+import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Slider from "react-slick";
-import { useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
-import blogs from "../../assets/image/blogs.png";
-import Button from "../../components/Button/Button";
-import VerticalCards from "../../components/Cards/VerticalCards";
-import request from "../../server/request";
-import "../../css/main.css";
+import Slider from "react-slick";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+/* =============================================================== */
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "swiper/css";
+/* =============================================================== */
+import request from "../../server/request";
+import Button from "../../components/Button/Button";
+import VerticalCards from "../../components/Cards/VerticalCards";
+import blogs from "../../assets/image/blogs.png";
+import blogs2 from "../../assets/image/blogs2.png";
+import blogs3 from "../../assets/image/blogs3.png";
+import "../../css/main.css";
+import { IMG_URL } from "../../constants/const";
+/* =============================================================== */
+/* =============================================================== */
+/* =============================================================== */
 
 function Main() {
   const [data, setData] = useState([]);
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-  };
-  // const categoriesItems = [
-  //   {
-  //     id: 1,
-  //     photo: "/src/assets/icons/Icon.svg",
-  //     name: "Business",
-  //     description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
-  //   },
-  //   {
-  //     id: 2,
-  //     photo: "/src/assets/icons/cyborg.svg",
-  //     name: "Startup",
-  //     description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
-  //   },
-  //   {
-  //     id: 3,
-  //     photo: "/src/assets/icons/shuttle.svg",
-  //     name: "Economy",
-  //     description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
-  //   },
-  //   {
-  //     id: 4,
-  //     photo: "/src/assets/icons/economy.svg",
-  //     name: "Technology",
-  //     description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
-  //   },
-  //   {
-  //     id: 5,
-  //     photo: "/src/assets/icons/Icon.svg",
-  //     name: "Business",
-  //     description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
-  //   },
-  //   {
-  //     id: 6,
-  //     photo: "/src/assets/icons/cyborg.svg",
-  //     name: "Startup",
-  //     description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
-  //   },
-  //   {
-  //     id: 7,
-  //     photo: "/src/assets/icons/shuttle.svg",
-  //     name: "Economy",
-  //     description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
-  //   },
-  //   {
-  //     id: 8,
-  //     photo: "/src/assets/icons/economy.svg",
-  //     name: "Technology",
-  //     description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
-  //   },
-  // ];
 
   useEffect(() => {
     async function getData() {
@@ -83,6 +35,42 @@ function Main() {
     }
     getData();
   }, []);
+
+  var settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   const breakpoints = {
     320: {
       slidesPerView: 1,
@@ -101,9 +89,13 @@ function Main() {
       spaceBetween: 50,
     },
   };
-  console.log(data);
+
+  function id(_id) {
+    console.log(_id);
+  }
+  /* =============================================================== */
   return (
-    <>
+    <Fragment>
       <section id="main_news">
         <div className="container">
           <div className="main">
@@ -129,12 +121,10 @@ function Main() {
                 </p>
               </div>
               <div className="read__more">
-                <Link to="/id">
-                  <Button
-                    title="Read more"
-                    icons={<ion-icon name="chevron-forward-outline"></ion-icon>}
-                  />
-                </Link>
+                <Button
+                  title="Read more"
+                  icons={<ion-icon name="chevron-forward-outline"></ion-icon>}
+                />
               </div>
             </div>
           </div>
@@ -157,13 +147,13 @@ function Main() {
                   postText="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
                 />
                 <VerticalCards
-                  img={blogs}
+                  img={blogs2}
                   date="By John Doe   l   Aug 23, 2021"
                   postTitle="A UX Case Study Creating a Studious Environment for Students:"
                   postText="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
                 />
                 <VerticalCards
-                  img={blogs}
+                  img={blogs3}
                   date="By John Doe   l   Aug 23, 2021"
                   postTitle="A UX Case Study Creating a Studious Environment for Students:"
                   postText="Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
@@ -196,7 +186,15 @@ function Main() {
                 {data.map((el, index) => (
                   <SwiperSlide key={index} className="items">
                     <div className="categories__icons">
-                      <img src={el.photo} alt={el.name} />
+                      <img
+                        src={
+                          IMG_URL +
+                          el.photo._id +
+                          "." +
+                          el.photo.name.split(".")[1]
+                        }
+                        alt={el.name}
+                      />
                     </div>
                     <div className="categories__item__title">
                       <h4>{el.name}</h4>
@@ -204,6 +202,11 @@ function Main() {
                     <div className="categories__item__subtitle">
                       <p>{el.description}</p>
                     </div>
+                    <button>
+                      <Link to={`${el._id}`} onClick={() => id(el._id)}>
+                        Read more
+                      </Link>
+                    </button>
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -211,7 +214,7 @@ function Main() {
           </div>
         </div>
       </section>
-    </>
+    </Fragment>
   );
 }
 

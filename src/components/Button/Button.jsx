@@ -1,7 +1,12 @@
 import { PropTypes } from "prop-types";
 
 function Button({ title, icons }) {
-  return <button>{title}{icons}</button>;
+  return (
+    <button>
+      {title}
+      {icons}
+    </button>
+  );
 }
 
 Button.propTypes = {

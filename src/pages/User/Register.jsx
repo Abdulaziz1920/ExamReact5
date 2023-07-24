@@ -28,7 +28,7 @@ function Register() {
     try {
       const {
         data: { token, role, expire },
-      } = await request.post("/auth/register", user);
+      } = await request.post("auth/register", user);
       Cookies.set(TOKEN, token);
       Cookies.set(ROLE, role);
       Cookies.set(EXPIRE_DATE, expire);

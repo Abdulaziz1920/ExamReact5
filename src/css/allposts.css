@@ -54,3 +54,10 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+@media (max-width: 500px) {
+  .category-cards {
+    display: grid !important;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

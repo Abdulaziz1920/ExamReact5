@@ -11,7 +11,7 @@ function Header() {
         <div className={styles.header}>
           <div className={styles.header__logo}>
             <Link to="/">
-              {isAuthenticated ? <h1>My Blogs</h1> :<h1>WorldViewNews</h1>}
+              {isAuthenticated ? <h1>My Blogs</h1> : <h1>WorldViewNews</h1>}
             </Link>
           </div>
           <div className={styles.header__menu}>
@@ -40,9 +40,11 @@ function Header() {
               </ul>
             </nav>
             <button className={styles.header__btn}>
-              {isAuthenticated ? <>
-                <Link to="account">Account</Link>
-              </> : (
+              {isAuthenticated ? (
+                <>
+                  <Link to="account">Account</Link>
+                </>
+              ) : (
                 <Link to="login">Login</Link>
               )}
             </button>

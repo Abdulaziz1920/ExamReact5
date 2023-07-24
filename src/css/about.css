@@ -64,3 +64,10 @@
   line-height: 28px;
   color: var(--black, #232536);
 }
+
+@media (max-width: 850px) {
+  .about__infotext, .aboutPosts {
+    display: grid !important;
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
